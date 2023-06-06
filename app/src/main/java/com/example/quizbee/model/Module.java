@@ -1,4 +1,4 @@
-package com.example.quizbee;
+package com.example.quizbee.model;
 
 public class Module {
     private Integer number;

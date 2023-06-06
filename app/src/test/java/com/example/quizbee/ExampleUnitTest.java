@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.quizbee.model.QuizBee;
 import com.example.quizbee.network.QuizApi;
 import com.example.quizbee.network.QuizApiService;
 import com.google.gson.Gson;
@@ -25,13 +26,13 @@ public class ExampleUnitTest {
 
     }
     @Test
-    public void getShops() throws IOException {
+    public void getQuizBee() throws IOException {
         QuizApi quizApi = new QuizApi();
         QuizApiService shopsApiService = quizApi.createQuizApiService();
         Call<List<QuizBee>> call = shopsApiService.getItems();
-        List<QuizBee> shops = call.execute().body();
-        assertNotNull(shops);
-        assertFalse(shops.isEmpty());
-        System.out.println(new Gson().toJson(shops));
+        List<QuizBee> quizBees = call.execute().body();
+        assertNotNull(quizBees);
+        assertFalse(quizBees.isEmpty());
+        System.out.println(new Gson().toJson(quizBees));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.quizbee;
+package com.example.quizbee.model;
 
 import com.google.gson.annotations.SerializedName;
 
