@@ -10,5 +10,6 @@ public class QuestionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_questions);
+        getSupportActionBar().setTitle("Quiz");
     }
 }
