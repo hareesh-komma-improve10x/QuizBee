@@ -1,11 +1,11 @@
-package com.example.quizbee;
+package com.example.quizbee.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 
+import com.example.quizbee.questions.QuestionsActivity;
 import com.example.quizbee.databinding.ActivityHomeBinding;
 
 public class HomeActivity extends AppCompatActivity {

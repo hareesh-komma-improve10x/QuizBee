@@ -15,10 +15,10 @@
         android:theme="@style/Theme.QuizBee"
         tools:targetApi="31">
         <activity
-            android:name=".QuestionsActivity"
+            android:name=".questions.QuestionsActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".home.HomeActivity"
             android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
