@@ -36,7 +36,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private QuizApiService quizApiService;
 
-    private int currentQuestionNum = 1;
+    private int currentQuestionNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +51,52 @@ public class QuestionsActivity extends AppCompatActivity {
         showProgressBar();
         hideProgressBar();
         showNextBtn();
+        submitButton();
+        showPreviousBtn();
+    }
+
+    private void showPreviousBtn() {
+        questionsBinding.previousBtn.setOnClickListener(v -> {
+            currentQuestionNum = questionsAdapter.currentQuestionPosition;
+            try {
+                currentQuestionNum--;
+                Questions question = questions.get(currentQuestionNum);
+                questionData(question);
+                questionsAdapter.currentQuestionPosition = currentQuestionNum;
+                questionsAdapter.notifyDataSetChanged();
+                if (currentQuestionNum == questions.size()) {
+                    questionsBinding.previousBtn.setVisibility(View.GONE);
+                } else {
+                    questionsBinding.previousBtn.setVisibility(View.VISIBLE);
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "No Questions", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void submitButton() {
+        questionsBinding.submitBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ResultActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void showNextBtn() {
         questionsBinding.nextBtn.setOnClickListener(v -> {
+            currentQuestionNum = questionsAdapter.currentQuestionPosition;
             currentQuestionNum++;
-            Questions question = questions.get(currentQuestionNum-1);
+            if (currentQuestionNum == questions.size() -1) {
+                questionsBinding.nextBtn.setVisibility(View.GONE);
+                questionsBinding.submitBtn.setVisibility(View.VISIBLE);
+            } else {
+                questionsBinding.nextBtn.setVisibility(View.VISIBLE);
+                questionsBinding.submitBtn.setVisibility(View.GONE);
+            }
+            Questions question = questions.get(currentQuestionNum);
             questionData(question);
+            questionsAdapter.currentQuestionPosition = currentQuestionNum;
+            questionsAdapter.notifyDataSetChanged();
         });
     }
 
