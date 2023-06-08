@@ -1,5 +1,6 @@
 package com.example.quizbee.questions;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -19,6 +20,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     private List<Questions> quizBees;
 
     private OnItemActionListener onItemActionListener;
+
+    private int currentQuestionNum = 1;
 
     void setData(List<Questions> quizBees) {
         this.quizBees = quizBees;

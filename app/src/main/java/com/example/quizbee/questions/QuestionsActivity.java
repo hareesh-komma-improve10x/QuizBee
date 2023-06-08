@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.quizbee.OnItemActionListener;
+import com.example.quizbee.ResultActivity;
 import com.example.quizbee.databinding.ActivityQuestionsBinding;
 import com.example.quizbee.model.Questions;
 import com.example.quizbee.model.QuizBee;
@@ -33,10 +36,7 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private QuizApiService quizApiService;
 
-    private QuizBee quizBee;
-
-    private Questions question;
-
+    private int currentQuestionNum = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,27 @@ public class QuestionsActivity extends AppCompatActivity {
         fetchData();
         setupAdapter();
         setupRv();
+        showProgressBar();
+        hideProgressBar();
+        showNextBtn();
     }
+
+    private void showNextBtn() {
+        questionsBinding.nextBtn.setOnClickListener(v -> {
+            currentQuestionNum++;
+            Questions question = questions.get(currentQuestionNum-1);
+            questionData(question);
+        });
+    }
+
+    private void hideProgressBar() {
+        questionsBinding.progressBar.setVisibility(View.GONE);
+    }
+
+    private void showProgressBar() {
+        questionsBinding.progressBar.setVisibility(View.VISIBLE);
+    }
+
     private void questionData(Questions question) {
         questionsBinding.questionTxt.setText(question.getQuestion());
         questionsBinding.radioOneRb.setText(question.getAnswers().get(0));
@@ -58,18 +78,22 @@ public class QuestionsActivity extends AppCompatActivity {
     }
 
     private void fetchData() {
+        showProgressBar();
         Call<List<QuizBee>> call = quizApiService.getItems();
         call.enqueue(new Callback<List<QuizBee>>() {
             @Override
             public void onResponse(Call<List<QuizBee>> call, Response<List<QuizBee>> response) {
+                hideProgressBar();
                 List<QuizBee> quizBeeList = response.body();
                 questionsAdapter.setData(quizBeeList.get(0).getQuestions());
-                questionData(quizBeeList.get(0).questions.get(0));
+                questions = quizBeeList.get(0).getQuestions();
+                questionData(questions.get(0));
                 Toast.makeText(QuestionsActivity.this, "Successfully Load Data", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<List<QuizBee>> call, Throwable t) {
+                hideProgressBar();
                 Toast.makeText(QuestionsActivity.this, "Failed to Load Data", Toast.LENGTH_SHORT).show();
 
             }
@@ -88,6 +112,7 @@ public class QuestionsActivity extends AppCompatActivity {
             @Override
             public void onClick(Questions question) {
                 questionData(question);
+                showNextBtn();
             }
         });
     }
