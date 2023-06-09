@@ -63,12 +63,10 @@ public class QuestionsActivity extends AppCompatActivity {
                 Questions question = questions.get(currentQuestionNum);
                 questionData(question);
                 questionsAdapter.currentQuestionPosition = currentQuestionNum;
+                questionsBinding.previousBtn.setVisibility(View.VISIBLE);
+                questionsBinding.submitBtn.setVisibility(View.GONE);
+                questionsBinding.nextBtn.setVisibility(View.VISIBLE);
                 questionsAdapter.notifyDataSetChanged();
-                if (currentQuestionNum == questions.size()) {
-                    questionsBinding.previousBtn.setVisibility(View.GONE);
-                } else {
-                    questionsBinding.previousBtn.setVisibility(View.VISIBLE);
-                }
             } catch (Exception e) {
                 Toast.makeText(this, "No Questions", Toast.LENGTH_SHORT).show();
             }

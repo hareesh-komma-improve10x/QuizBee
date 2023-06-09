@@ -3,6 +3,7 @@ package com.example.quizbee.questions;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -53,7 +54,6 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
             holder.questionsItemBinding.questionsCountTxt.setTextColor(Color.parseColor("#D61D1D"));
         } else {
             holder.questionsItemBinding.questionsCountTxt.setTextColor(Color.parseColor("#050505"));
-
         }
     }
 
