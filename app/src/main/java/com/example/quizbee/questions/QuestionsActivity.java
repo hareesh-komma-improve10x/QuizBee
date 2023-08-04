@@ -38,6 +38,8 @@ public class QuestionsActivity extends AppCompatActivity {
 
     private int currentQuestionNum = 0;
 
+    private Integer[] answerOptionIndexes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,22 @@ public class QuestionsActivity extends AppCompatActivity {
         showNextBtn();
         submitButton();
         showPreviousBtn();
+        //showRadioBtn();
+    }
+
+    private void showRadioBtn() {
+        questionsBinding.radioGroupRg.setOnCheckedChangeListener((group, checkedId) -> {
+           answerOptionIndexes[currentQuestionNum-1] = 0;
+           if (answerOptionIndexes[currentQuestionNum-1] == -1) {
+               showRadioBtn();
+           } else if (answerOptionIndexes[currentQuestionNum-1] == 0) {
+               showRadioBtn();
+           } else if (answerOptionIndexes[currentQuestionNum-1] == 1) {
+               showRadioBtn();
+           } else if (answerOptionIndexes[currentQuestionNum-1] == 2) {
+               showRadioBtn();
+           }
+        });
     }
 
     private void showPreviousBtn() {
@@ -125,6 +143,7 @@ public class QuestionsActivity extends AppCompatActivity {
                 questionsAdapter.setData(quizBeeList.get(0).getQuestions());
                 questions = quizBeeList.get(0).getQuestions();
                 questionData(questions.get(0));
+                answerOptionIndexes = new Integer[questions.get(0).getAnswers().size()];
                 Toast.makeText(QuestionsActivity.this, "Successfully Load Data", Toast.LENGTH_SHORT).show();
             }
 
@@ -132,7 +151,6 @@ public class QuestionsActivity extends AppCompatActivity {
             public void onFailure(Call<List<QuizBee>> call, Throwable t) {
                 hideProgressBar();
                 Toast.makeText(QuestionsActivity.this, "Failed to Load Data", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
